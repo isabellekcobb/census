@@ -12,7 +12,7 @@
 
 ----
 
-[![validation](https://github.com/openfido/PIPELINE_NAME/actions/workflows/main.yml/badge.svg)](https://github.com/openfido/PIPELINE_NAME/actions/workflows/main.yml)
+[![validation](https://github.com/openfido/census/actions/workflows/main.yml/badge.svg)](https://github.com/openfido/census/actions/workflows/main.yml)
 
 *Insert a one-line description of the pipeline's function here.*
 
