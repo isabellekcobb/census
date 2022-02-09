@@ -28,3 +28,8 @@ OUTPUT
 The following files are generated in the output folder.
 
 * `output.csv`: The output file will include the requested state and zipcode fields, as well as all the input fields.
+
+SEE ALSO
+--------
+
+* https://www.census.gov/programs-surveys/geography/guidance/tiger-data-products-guide.html
