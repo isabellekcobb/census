@@ -69,9 +69,12 @@ OPENFIDO_OUTPUT = os.getenv("OPENFIDO_OUTPUT")
 # Defaults
 #
 OPTIONS = {
+    "input_filename" : "input.csv",
+    "output_filename" : "output.csv",
     "state_fields" : "STUSPS",
     "zipcode_fields" : "ZCTA5CE10",
-    "tract_fields" : "",}
+    "tract_fields" : "",
+    }
 
 CONFIG = {
     "verbose" : False,
@@ -153,9 +156,7 @@ def load_data():
                 return astype(x)
         for row in reader:
             row0 = row[0].lower()
-            if row0 == "data":
-                DATA = pandas.read_csv(f"{OPENFIDO_INPUT}/{row[1]}")
-            elif row0 in CONFIG.keys():
+            if row0 in CONFIG.keys():
                 if len(row) == 1:
                     CONFIG[row0] = True
                 else:
@@ -164,13 +165,13 @@ def load_data():
                 if len(row) == 1:
                     OPTIONS[row0] = True
                 else:   
-                    OPTIONS[row0] = cast(row[1],type(CONFIG[row0]))
+                    OPTIONS[row0] = cast(row[1],type(OPTIONS[row0]))
             else:
                 error(f"config.csv parameter {row[0]} is not valid",Exception)
-    return DATA
+    return pandas.read_csv(f"{OPENFIDO_INPUT}/{OPTIONS['input_filename']}")
 
 #
-# Implementation of address package
+# Implementation of census package
 #
 state_tract_codes = {
     '01':'AL',
@@ -337,8 +338,8 @@ def main(data, options=OPTIONS, config=CONFIG, warning=warning):
     if options["tract_fields"]:
 
         warning("census tract is not implemented yet")
-        return data
 
+    data.index.name = "id"
     return data
 
 state_data = None
@@ -468,8 +469,7 @@ def get_zipcodes(zipcode=None,contains=None,config=CONFIG):
 
     return result
 
-
 if __name__ == "__main__":
     DATA = load_data()
     result = main(DATA)
-    result.to_csv(f"{OPENFIDO_OUTPUT}/address.csv")
+    result.to_csv(f"{OPENFIDO_OUTPUT}/{OPTIONS['output_filename']}")
