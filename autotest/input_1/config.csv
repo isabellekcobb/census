@@ -1,1 +1,4 @@
-TODO,add your test case parameters here
+INPUT_FILENAME,input.csv
+OUTPUT_FILENAME,output.csv
+STATE_FIELDS,*
+ZIPCODE_FIELDS,*
