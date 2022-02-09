@@ -1,1 +1,4 @@
-DATA,data.csv
+INPUT_FILENAME,input.csv
+OUTPUT_FILENAME,output.csv
+STATE_FIELDS,*
+ZIPCODE_FIELDS,*
