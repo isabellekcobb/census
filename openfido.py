@@ -54,9 +54,12 @@ version = 1 # specify API version
 
 import sys, os
 import json, csv
-import pandas as pd
+import pandas 
+import geopandas
+import urllib.request
+import pickle
 from shapely.geometry import Point
-from geopandas.tools import geocode, reverse_geocode
+import censusdata
 
 NAME = "census" 
 OPENFIDO_INPUT = os.getenv("OPENFIDO_INPUT")
@@ -122,7 +125,7 @@ def warning(msg):
     if CONFIG["warning"]:
         print(f"WARNING [{NAME}]: {msg}", file=sys.stderr)
 
-def load_config():
+def load_data():
     
     global OPENFIDO_INPUT
     if not OPENFIDO_INPUT:
@@ -151,7 +154,7 @@ def load_config():
         for row in reader:
             row0 = row[0].lower()
             if row0 == "data":
-                DATA = pd.read_csv(f"{OPENFIDO_INPUT}/{row[1]}")
+                DATA = pandas.read_csv(f"{OPENFIDO_INPUT}/{row[1]}")
             elif row0 in CONFIG.keys():
                 if len(row) == 1:
                     CONFIG[row0] = True
@@ -164,6 +167,7 @@ def load_config():
                     OPTIONS[row0] = cast(row[1],type(CONFIG[row0]))
             else:
                 error(f"config.csv parameter {row[0]} is not valid",Exception)
+    return DATA
 
 #
 # Implementation of address package
@@ -466,7 +470,6 @@ def get_zipcodes(zipcode=None,contains=None,config=CONFIG):
 
 
 if __name__ == "__main__":
-    DATA = None
-    load_config()
+    DATA = load_data()
     result = main(DATA)
     result.to_csv(f"{OPENFIDO_OUTPUT}/address.csv")
