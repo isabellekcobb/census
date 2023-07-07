@@ -2,7 +2,6 @@
 #
 # Generic python environment for OpenFIDO
 #
-
 error()
 {
     echo '*** ABNORMAL TERMINATION ***'
